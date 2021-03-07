@@ -6,9 +6,27 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>eilės</title>
 		<link rel="stylesheet" href="/style.css" />
+		<style>
+			.hidden {
+				display: none;
+			}
+		</style>
 	</head>
 
 	<body>
-		authenticate on <a href="/auth/github">github</a>
+		<p class="auth-github">authenticate on <a href="/auth/github">github</a></p>
+		<p class="github-token"></p>
+
+		<script>
+			const githubToken = localStorage.getItem("githubToken");
+
+			if (githubToken) {
+				const authGithubEl = document.querySelector(".auth-github");
+				authGithubEl.classList.add("hidden");
+
+				const githubTokenEl = document.querySelector(".github-token");
+				githubTokenEl.innerHTML = githubToken;
+			}
+		</script>
 	</body>
 </html>

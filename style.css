@@ -1,24 +1,24 @@
 :root {
 	--color-alpha: white;
-	--color-beta: black;
+	--color-bravo: black;
+	--color-charlie: darkSlateGray;
 }
 
 body {
 	padding: 0;
-	margin: 0;
 	background-color: var(--color-alpha);
-	color: var(--color-beta);
+	color: var(--color-bravo);
 	font-family: serif;
 	max-width: 900px;
 }
 
 a {
-	color: var(--color-beta);
+	color: var(--color-bravo);
 	text-decoration: none;
 }
 
 a:hover {
-	background-color: var(--color-beta);
+	background-color: var(--color-bravo);
 	color: var(--color-alpha);
 }
 
@@ -38,12 +38,13 @@ a[target="_blank"]::after {
 
 a:visited::before,
 a:visited::after {
-	color: var(--color-alpha);
+	color: var(--color-charlie);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--color-alpha: black;
-		--color-beta: white;
+		--color-bravo: white;
+		--color-charlie: darkSlateGray;
 	}
 }

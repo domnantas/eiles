@@ -17,9 +17,25 @@
 				generate github personal access token
 			</a>
 		</p>
-		<form>
-			<label>enter github personal access token <input type="text" /></label>
+		<form class="github-form">
+			<label
+				>enter github personal access token
+				<input type="text" name="githubToken" />
+			</label>
 			<button type="submit">submit</button>
 		</form>
+
+		<script>
+			const githubFormEl = document.querySelector(".github-form");
+
+			githubFormEl.addEventListener("submit", (event) => {
+				event.preventDefault();
+
+				const formData = Object.fromEntries(new FormData(event.target));
+				localStorage.setItem("githubToken", formData.githubToken);
+
+				window.location.href = "/";
+			});
+		</script>
 	</body>
 </html>
