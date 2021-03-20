@@ -9,26 +9,25 @@
 	</head>
 
 	<body>
-		<p>
-			<a
-				href="https://github.com/settings/tokens/new?scopes=repo&description=eiles"
-				target="_blank"
-			>
-				generate github personal access token
-			</a>
-		</p>
+		<a
+			href="https://github.com/settings/tokens/new?scopes=repo&description=eiles"
+			target="_blank"
+		>
+			generate github personal access token
+		</a>
+		<br />
 		<form class="github-form">
-			<label
-				>enter github personal access token
+			<label>
+				enter github personal access token
 				<input type="text" name="githubToken" />
 			</label>
 			<button type="submit">submit</button>
 		</form>
 
 		<script>
-			const githubFormEl = document.querySelector(".github-form");
+			const githubFormElement = document.querySelector(".github-form");
 
-			githubFormEl.addEventListener("submit", (event) => {
+			githubFormElement.addEventListener("submit", (event) => {
 				event.preventDefault();
 
 				const formData = Object.fromEntries(new FormData(event.target));
