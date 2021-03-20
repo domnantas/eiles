@@ -6,27 +6,36 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>eilės</title>
 		<link rel="stylesheet" href="/style.css" />
-		<style>
-			.hidden {
-				display: none;
-			}
-		</style>
 	</head>
 
 	<body>
-		<p class="auth-github">authenticate on <a href="/auth/github">github</a></p>
-		<p class="github-token"></p>
+		<div class="loading">loading</div>
 
-		<script>
+		<main class="hidden">
+			<a href="/repositories/">select repository</a>
+			<a href="/auth/">logout</a>
+		</main>
+
+		<script type="module">
+			import { graphql } from "https://cdn.skypack.dev/@octokit/graphql";
+
 			const githubToken = localStorage.getItem("githubToken");
-
-			if (githubToken) {
-				const authGithubEl = document.querySelector(".auth-github");
-				authGithubEl.classList.add("hidden");
-
-				const githubTokenEl = document.querySelector(".github-token");
-				githubTokenEl.innerHTML = githubToken;
+			if (!githubToken) {
+				window.location.href = "/auth/";
 			}
+
+			const selectedGithubRepository = localStorage.getItem(
+				"selectedGithubRepository"
+			);
+			if (!selectedGithubRepository) {
+				window.location.href = "/repositories/";
+			}
+
+			const loadingElement = document.querySelector(".loading");
+			const mainElement = document.querySelector("main");
+
+			loadingElement.classList.add("hidden");
+			mainElement.classList.remove("hidden");
 		</script>
 	</body>
 </html>
