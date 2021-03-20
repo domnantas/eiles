@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>eilės - repositories</title>
+		<link rel="stylesheet" href="/style.css" />
+	</head>
+
+	<body>
+		<div class="loading">loading</div>
+		<br />
+		<div class="repositories hidden">
+			select repository
+			<ul class="list"></ul>
+		</div>
+
+		<script type="module">
+			import { graphql } from "https://cdn.skypack.dev/@octokit/graphql";
+			const githubToken = localStorage.getItem("githubToken");
+
+			if (!githubToken) {
+				window.location.href = "/auth/";
+			}
+
+			const fetchRepositories = () =>
+				fetch("https://api.github.com/graphql", {
+					headers: {
+						Authorization: `token ${githubToken}`,
+						"Content-Type": "application/json",
+					},
+					method: "POST",
+					body: JSON.stringify({
+						query: `{
+							viewer {
+								repositories(first: 10) {
+									totalCount
+									nodes {
+										nameWithOwner
+									}
+								}
+							}
+						}`,
+					}),
+				}).then((response) => response.json());
+
+			(async () => {
+				const repositories = await fetchRepositories();
+
+				const loadingElement = document.querySelector(".loading");
+				const repositoryElement = document.querySelector(".repositories");
+				const repositoryListElement = repositoryElement.querySelector(".list");
+
+				const repositoryList = repositories.data.viewer.repositories.nodes
+					.map((node) => `<li><a>${node.nameWithOwner}</a></li>`)
+					.join("");
+				repositoryListElement.innerHTML = repositoryList;
+
+				loadingElement.classList.add("hidden");
+				repositoryElement.classList.remove("hidden");
+
+				repositoryListElement.addEventListener("click", (event) => {
+					if (event.target.tagName !== "A") {
+						return;
+					}
+					event.preventDefault();
+
+					localStorage.setItem(
+						"selectedGithubRepository",
+						event.target.innerHTML
+					);
+
+					window.location.href = "/";
+				});
+			})();
+		</script>
+	</body>
+</html>
